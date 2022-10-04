@@ -7,29 +7,31 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 
+
 public class Main {
 
 	private static final int CANTIDAD_DECIMALES = 3;
 
 	public static void main(String[] args) throws Exception {	
-		BigDecimal random = new BigDecimal(50); 
+//		BigDecimal random = new BigDecimal(50); 
 		
-		List<BigDecimal> numAleatorios = generarNumerosAleatorios(random,50);
-		Map<BigDecimal, Integer> misNumeros = cargarRepeticiones(numAleatorios,50);
-		System.out.print("50 numeros aleatorios: " + numAleatorios + "\n");
-		misNumeros.forEach((numero, repeticiones)-> System.out.print("El numero: " + numero + " fue repetido: " + repeticiones + " veces\n") );   
-		
-		List<BigDecimal> numAleatorios2 = generarNumerosAleatorios(random,10000);
-		Map<BigDecimal, Integer> misNumeros2 = cargarRepeticiones(numAleatorios2,10000);
+//		List<BigDecimal> numAleatorios = generarNumerosAleatorios(random,50);
+//		Map<BigDecimal, Integer> misNumeros = cargarRepeticiones(numAleatorios,50);
+//		System.out.print("50 numeros aleatorios: " + numAleatorios + "\n");
+//		misNumeros.forEach((numero, repeticiones)-> System.out.print("El numero: " + numero + " fue repetido: " + repeticiones + " veces\n") );   
+    
+		BigDecimal random = new BigDecimal(50);
+		List<BigDecimal> numAleatorios2 = generarNumerosAleatorios(10000);
+		Map<BigDecimal, Integer> misNumeros2 = cargarRepeticiones(numAleatorios2,1000);
 		System.out.print("10000 numeros aleatorios: " + numAleatorios2 + "\n");
 		
-		misNumeros2.forEach((numero, repeticiones)-> {	 
+		misNumeros2.forEach((numero, repeticiones)-> {
 		String num = String.valueOf(numero.doubleValue());
 		Integer min = Integer.valueOf(num.substring(2));
 		StringBuilder ia = new StringBuilder();
 		
 		if(min<60){
-			ia.append( (repeticiones * 2)+"/08/2022");
+			ia.append((repeticiones*2)+"/09/2022");
 			Integer hora = Integer.divideUnsigned(min, 2);
 			if(hora >= 8 && hora < 22){
 				ia.append(" "+hora);
@@ -54,7 +56,7 @@ public class Main {
 		
 		BigDecimal masRepetido = BigDecimal.ZERO;
 		int repeticionesMaximas = 0;
-		List<BigDecimal> numerosDentroDelRango = new LinkedList<BigDecimal>();
+		List<String> numerosDentroDelRango = new LinkedList<String>();
 	
 		for (Map.Entry<BigDecimal, Integer> entry : misNumeros2.entrySet()) {
 			if(repeticionesMaximas < entry.getValue()){
@@ -63,17 +65,19 @@ public class Main {
 			}		
 			if(entry.getKey().compareTo(new BigDecimal(0)) >= 0){
 				if(entry.getKey().compareTo(new BigDecimal(1)) <= 0){
-					numerosDentroDelRango.add(entry.getKey());
+					
+					double num = entry.getKey().doubleValue();
+					int p_ent = (int) entry.getKey().intValue();
+					numerosDentroDelRango.add(String.valueOf(num - p_ent).substring(2));
 				}
 			}
 		}
-		
-		System.out.print("Numero dentro del rango: " + numerosDentroDelRango +"\n");
-		System.out.print("Cantidad dentro del rango: " + numerosDentroDelRango.size() +"\n");
+//		numerosDentroDelRango.stream().forEach(System.out::println);  
+//		System.out.print("Cantidad dentro del rango: " + numerosDentroDelRango.size() +"\n");
 
 	}	
 	
-	public static List<BigDecimal> generarNumerosAleatorios(BigDecimal densidad, int cantidadDeRepeticiones){
+	public static List<BigDecimal> generarNumerosAleatorios( int cantidadDeRepeticiones){
 		List<BigDecimal> numeros = new LinkedList<BigDecimal>();
 		for(int i=0; i<cantidadDeRepeticiones;i++){
 			double random = Math.random();
