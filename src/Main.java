@@ -20,6 +20,17 @@ public class Main {
 //		System.out.print("50 numeros aleatorios: " + numAleatorios + "\n");
 //		misNumeros.forEach((numero, repeticiones)-> System.out.print("El numero: " + numero + " fue repetido: " + repeticiones + " veces\n") );   
     
+        System.out.println("impresoras NP");
+    	for(int i = 0; i< 100;i++){   
+//    		//1/f(x)=-97.165ln(-(1-x)/x)+702.87
+//    		double r = Math.random();
+//			int ta = (int) (-97.165*Math.log((1-r)/r)+702.87);
+    		
+            System.out.println(-Math.log(1-Math.random())/(0.00949));
+    	}
+    	
+    	
+        
 		BigDecimal random = new BigDecimal(50);
 		List<BigDecimal> numAleatorios2 = generarNumerosAleatorios(10000);
 		Map<BigDecimal, Integer> misNumeros2 = cargarRepeticiones(numAleatorios2,1000);
@@ -100,7 +111,25 @@ public class Main {
 			}
 		}
 		return numerosRepetidos;
-		
+
+	}
+	
+	private static int intervaloPedido(boolean diasEspeciales) {
+
+        // TODO calcular con la fdp -> f(R) = ln(-R+1)/(-0,0002)
+        //return (int) (Math.random()*(480-120+1)+120);
+
+        double ia = 0;
+
+//		for(int i =0;i<500;i++){
+//        if(diasEspeciales){
+//            ia = Math.log(-Math.random()+1)/(-0.002);
+//        }else{
+//            //f(R) = 1*(-ln(-R+1))^(1/3)
+//            ia = Math.pow(-Math.log(-Math.random()+1),0.333);
+//       }
+        
+       return new BigDecimal(ia).intValue();
 
 	}
 }

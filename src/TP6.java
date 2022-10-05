@@ -1,123 +1,23 @@
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.LinkedList;
 import java.util.List;
 
 public class TP6 {
 
     private static final int HV = 999999999; //694k dias - 23k meses
-    private static final int TF = 99999;
-    private static final int N = 1;
-    private static final int M = 1;
-
-    int t, tpll, ia, ta, nsp, nsr, nsrt, nspt, rechazo;
-
-    List<Impresora> impresorasM = new LinkedList<>();
-    List<Impresora> impresorasN = new LinkedList<>();
-
-    private void condicionesIniciales() {
-        MR m1 = new MR();
-        MR m2 = new MR();
-        MR m3 = new MR();
-        MR m4 = new MR();
-        MR m5 = new MR();
-        NP n1 = new NP();
-        NP n2 = new NP();
-        NP n3 = new NP();
-        NP n4 = new NP();
-        NP n5 = new NP();
-        m1.tps=HV;
-        m1.pto=0;
-        m1.ito=0;
-        m1.numeroImpresora = 1;
-
-        m2.tps=HV;
-        m2.pto=0;
-        m2.ito=0;
-        m2.numeroImpresora = 2;
-        
-        m3.tps=HV;
-        m3.pto=0;
-        m3.ito=0;
-        m3.numeroImpresora = 3;
-        
-        m4.tps=HV;
-        m4.pto=0;
-        m4.ito=0;
-        m4.numeroImpresora = 4;
-
-        m5.tps=HV;
-        m5.pto=0;
-        m5.ito=0;
-        m5.numeroImpresora = 5;
-
-        n1.tps=HV;
-        n1.pto=0;
-        n1.ito=0;
-        n1.numeroImpresora = 1;
-
-        n2.tps=HV;
-        n2.pto=0;
-        n2.ito=0;
-        n2.numeroImpresora = 2;
-
-        n3.tps=HV;
-        n3.pto=0;
-        n3.ito=0;
-        n3.numeroImpresora = 3;
-
-        n4.tps=HV;
-        n4.pto=0;
-        n4.ito=0;
-        n4.numeroImpresora = 4;
-
-        n5.tps=HV;
-        n5.pto=0;
-        n5.ito=0;
-        n5.numeroImpresora = 5;
-
-        t = 0;
-        tpll = 1;
-        ia = 0;
-        ta = 0;
-        nsp = 0;
-        nsr = 0;
-        nsrt = 0;
-        nspt = 0;
-        rechazo = 0;
-        impresorasM.add(m1);
-        impresorasM.add(m2);
-        impresorasM.add(m3);
-        impresorasM.add(m4);
-        impresorasM.add(m5);
-        impresorasN.add(n1);
-        impresorasN.add(n2);
-        impresorasN.add(n3);
-        impresorasN.add(n4);
-        impresorasN.add(n5);
-        
-    }
-
-
-    public class Impresora{
-        int numeroImpresora;
-        int tps;
-        int pto;
-        int ito;
-    }
-
-    public class MR extends Impresora{
-    }
-
-    public class NP extends Impresora{
-    }
-
-
+    private static final int TF = 999999;
+    private static final int N = 4; //PLA
+    private static final int M = 3; //Resina
+    private static final boolean DIAS_ESPECIALES = false;
+    
+    
     public static void main(String[] args) throws Exception {
     	TP6 tp6 = new TP6();
         tp6.simulacion();
     }
-
+    
     public void simulacion(){
         boolean fin = false;
         condicionesIniciales();
@@ -140,29 +40,79 @@ public class TP6 {
         System.out.println("=============================");
         System.out.println("Tiempo simulacion: "+ t + " minutos o " + t/60 + " horas. o " + t/60/24 + " dias" );
         System.out.println("Impresoras de PLA: "+N);
-        System.out.println("Impresoras de resina: "+M);
-        System.out.println("******Tiempos osiosos de cada impresora*******");
-        for(Impresora im: impresorasN){
-            System.out.println("Impresora: "+im.numeroImpresora);
-            System.out.println("TPS: " + im.tps);
-            System.out.println("PTO: " + im.pto);
-            System.out.println("ITO: " + im.ito);
+        BigDecimal tiempo = new BigDecimal(t);
+        BigDecimal cien = new BigDecimal(100);
+        for(int i =0 ; i< (N);i++){
+//            System.out.println("******Porcentaje de t osiosos PLA *******");
+//            System.out.println("Impresora: "+impresorasN.get(i).numeroImpresora);
+//            System.out.println("TPS: " + impresorasN.get(i).tps);
+            BigDecimal pto = new BigDecimal(impresorasN.get(i).pto);
+			System.out.println("PPTOP: " + pto.divide(tiempo, 2, RoundingMode.HALF_EVEN).multiply(cien) +"%");
+            System.out.println("***************");
+//          System.out.println("ITO: " + impresorasN.get(i).ito);
         }
-        for(Impresora im: impresorasM){
-            System.out.println("Impresora: "+im.numeroImpresora);
-            System.out.println("TPS: " + im.tps);
-            System.out.println("PPTOP: " + im.pto/t);
+        System.out.println("Impresoras de resina: "+M);
+
+        for(int i =0 ; i< (M);i++){
+//            System.out.println("******Porcentaje de t osiosos Resina *******");
+//            System.out.println("Impresora: "+impresorasM.get(i).numeroImpresora);
+//            System.out.println("TPS: " + impresorasM.get(i).tps);
+            BigDecimal pto = new BigDecimal(impresorasM.get(i).pto);
+			System.out.println("PPTOP: " + pto.divide(tiempo, 2, RoundingMode.HALF_EVEN).multiply(cien) +"%");
+            System.out.println("***************");
             //System.out.println("ITO: " + im.ito);
         }
 
-        System.out.println("Rechazos: " + rechazo);
-        System.out.println("NSPT: " + nspt);
-        System.out.println("NSRT: " + nsrt);
+//        double division = rechazoN/(nspt+nsrt+rechazoN+rechazoM);
+		BigDecimal totalPedidos = new BigDecimal(nspt+nsrt+rechazoN+rechazoM);
+		BigDecimal rechazosPLA = new BigDecimal(rechazoN);
+		BigDecimal rechazosResina = new BigDecimal(rechazoM);
+		BigDecimal rechazosPorcentajePLA = rechazosPLA.divide(totalPedidos,2,RoundingMode.HALF_EVEN).multiply(cien);
+        BigDecimal rechazosPorcentajeResina = rechazosResina.divide(totalPedidos,2,RoundingMode.HALF_EVEN).multiply(cien);
+//      BigDecimal totalIngresosPLA = new BigDecimal(nspt*2400); 
+//      System.out.println("NSPT: " + nspt + " Ingresos: "+ totalIngresosPLA.divide(tiempo.divide(new BigDecimal(60),2,RoundingMode.HALF_EVEN),2,RoundingMode.HALF_EVEN).divide(new BigDecimal(24),2,RoundingMode.HALF_EVEN) + " Rechazados: " + rechazosPLA);
+        System.out.println("NSPT: " + nspt + " Rechazados: " + rechazosPLA + " - % Rechazos PLA: " + rechazosPorcentajePLA);
+        System.out.println("NSRT: " + nsrt + " Rechazados: " + rechazosResina +  " - % Rechazos Resina: " + rechazosPorcentajeResina);
+        System.out.println("Total : " +totalPedidos);
 
 
     }
 
+    int t, tpll, ia, ta, nsp, nsr, nsrt, nspt, rechazoN, rechazoM;
 
+    List<Impresora> impresorasM = new LinkedList<>();
+    List<Impresora> impresorasN = new LinkedList<>();
+    
+    private void condicionesIniciales() {
+        for(int i = 0 ; i<M;i++){
+        	MR m = new MR();
+        	m.tps=HV;
+        	m.pto=0;
+        	m.ito=0;
+        	m.numeroImpresora = i;
+        	impresorasM.add(m);
+        }        
+        for(int i = 0 ; i<N;i++){
+        	NP n = new NP();
+        	n.tps=HV;
+        	n.pto=0;
+        	n.ito=0;
+        	n.numeroImpresora = i;
+        	impresorasN.add(n);      
+        }
+        t = 0;
+        tpll = 1;
+        ia = 0;
+        ta = 0;
+        nsp = 0;
+        nsr = 0;
+        nsrt = 0;
+        nspt = 0;
+        rechazoN = 0;
+        rechazoM = 0;
+        
+    }
+    
     private void procesarSalida() {
         Impresora impresoraM= menorPuestoM();
         Impresora impresoraN= menorPuestoN();
@@ -192,12 +142,12 @@ public class TP6 {
 
     private void procesarLlegada() {
         t = tpll;
-        ia = intervaloPedido(true);
+        ia = intervaloPedido(DIAS_ESPECIALES);
         tpll = t + ia;
         double r = Math.random();
         if(r<=new Double(0.7)){
-            if(nsp>5){
-                rechazo++;
+            if(nsp>N+5){
+                rechazoN++;
             }else{
                 nsp++;
                 nspt++;
@@ -212,8 +162,8 @@ public class TP6 {
                 }
             }
         }else{
-            if(nsr>5){
-                rechazo++;
+            if(nsr>M+5){
+                rechazoM++;
             }else{
                 nsr++;
                 nsrt++;
@@ -234,41 +184,19 @@ public class TP6 {
 
     private int tiempoAtencionImpresora(Impresora impresora) {
         int ta;
-        // TODO  M 120 y 240 minutos y N 360 y 1020 minutos
-        /*int ta = random();
+        //  M 120 y 240 minutos y N 360 y 1020 minutos
 
-        boolean seguirBuscando = true;
-        do{
-            if(impresora instanceof NP){
-                if(ta>120 && ta<240){
-                    seguirBuscando = false;
-                }else{
-                    ta = random();
-                }
-            }
-            if(impresora instanceof MR){
-                if(ta>360 && ta<1020){
-                    seguirBuscando = false;
-                }else{
-                    ta = random();
-                }
-            }
-
-            System.out.println(ta);
-        }while(seguirBuscando);
-        return ta;*/
         if(impresora instanceof NP){
-            ta = (int) (Math.random()*(1020-360+1)+360);
+        	//F(x)'=-97.165ln(-(1-x)/x)+702.87
+    		double r = Math.random();
+			ta = (int) (-97.165*Math.log((1-r)/r)+702.87);
         }
         else{
+        	//F(x)'=-ln(1-r)/0.00533
             ta = (int) (Math.random()*(240-120+1)+120);
         }
         return ta;
     }
-    /*public int random(){
-        double taDouble = new Double(String.valueOf(Math.random()).substring(2,5));
-        return new BigDecimal(taDouble).intValue();
-    }*/
 
     private Impresora buscoPuestoLibreN() {
         for(Impresora impresora: impresorasN){
@@ -290,22 +218,15 @@ public class TP6 {
 
     private int intervaloPedido(boolean diasEspeciales) {
 
-        // TODO calcular con la fdp -> f(R) = ln(-R+1)/(-0,0002)
-        //return (int) (Math.random()*(480-120+1)+120);
-
         double ia = 0;
 
-//		for(int i =0;i<500;i++){
         if(diasEspeciales){
-            ia = Math.log10(-Math.random()+1)/(-0.02);
+        	//F(R)' =  -ln(1-x)/0.00949 
+            ia = -Math.log(1-Math.random())/(0.00949);
         }else{
-            //f(R) = 1*(-ln(-R+1))^(1/3)
-            ia = Math.pow(-Math.log10(-Math.random()+1),0.333);
+            //F(R)' = -48.583ln((1/x)-1)+295.76
+            ia = -48.583*Math.log((1/Math.random())-1)+295.76;
         }
-//		System.out.println(ia/2);
-//		}
-
-
 
         return new BigDecimal(ia/2).intValue();
    }
@@ -345,5 +266,16 @@ public class TP6 {
         return im;
     }
 
+    public class Impresora{
+        int numeroImpresora;
+        int tps;
+        int pto;
+        int ito;
+    }
 
+    public class MR extends Impresora{
+    }
+
+    public class NP extends Impresora{
+    }
 }
